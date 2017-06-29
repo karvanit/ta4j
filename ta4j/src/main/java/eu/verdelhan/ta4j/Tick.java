@@ -84,6 +84,26 @@ public class Tick implements Serializable {
                 Decimal.valueOf(highPrice),
                 Decimal.valueOf(lowPrice),
                 Decimal.valueOf(closePrice),
+                Decimal.ZERO,
+                Decimal.valueOf(volume));
+    }
+
+    /**
+     * Constructor.
+     * @param endTime the end time of the tick period
+     * @param openPrice the open price of the tick period
+     * @param highPrice the highest price of the tick period
+     * @param lowPrice the lowest price of the tick period
+     * @param closePrice the close price of the tick period
+     * @param amount the total amount of the tick period
+     * @param volume the volume of the tick period
+     */
+    public Tick(ZonedDateTime endTime, double openPrice, double highPrice, double lowPrice, double closePrice, double amount, double volume) {
+        this(endTime, Decimal.valueOf(openPrice),
+                Decimal.valueOf(highPrice),
+                Decimal.valueOf(lowPrice),
+                Decimal.valueOf(closePrice),
+                Decimal.ZERO,
                 Decimal.valueOf(volume));
     }
 
@@ -101,6 +121,26 @@ public class Tick implements Serializable {
                 Decimal.valueOf(highPrice),
                 Decimal.valueOf(lowPrice),
                 Decimal.valueOf(closePrice),
+                Decimal.ZERO,
+                Decimal.valueOf(volume));
+    }
+
+    /**
+     * Constructor.
+     * @param endTime the end time of the tick period
+     * @param openPrice the open price of the tick period
+     * @param highPrice the highest price of the tick period
+     * @param lowPrice the lowest price of the tick period
+     * @param closePrice the close price of the tick period
+     * @param amount the total amount of the tick period
+     * @param volume the volume of the tick period
+     */
+    public Tick(ZonedDateTime endTime, String openPrice, String highPrice, String lowPrice, String closePrice, String amount, String volume) {
+        this(endTime, Decimal.valueOf(openPrice),
+                Decimal.valueOf(highPrice),
+                Decimal.valueOf(lowPrice),
+                Decimal.valueOf(closePrice),
+                Decimal.valueOf(amount),
                 Decimal.valueOf(volume));
     }
 
@@ -114,7 +154,21 @@ public class Tick implements Serializable {
      * @param volume the volume of the tick period
      */
     public Tick(ZonedDateTime endTime, Decimal openPrice, Decimal highPrice, Decimal lowPrice, Decimal closePrice, Decimal volume) {
-        this(Duration.ofDays(1), endTime, openPrice, highPrice, lowPrice, closePrice, volume);
+        this(Duration.ofDays(1), endTime, openPrice, highPrice, lowPrice, closePrice, Decimal.ZERO, volume);
+    }
+
+    /**
+     * Constructor.
+     * @param endTime the end time of the tick period
+     * @param openPrice the open price of the tick period
+     * @param highPrice the highest price of the tick period
+     * @param lowPrice the lowest price of the tick period
+     * @param closePrice the close price of the tick period
+     * @param amount the total amount of the tick period
+     * @param volume the volume of the tick period
+     */
+    public Tick(ZonedDateTime endTime, Decimal openPrice, Decimal highPrice, Decimal lowPrice, Decimal closePrice, Decimal amount, Decimal volume) {
+        this(Duration.ofDays(1), endTime, openPrice, highPrice, lowPrice, closePrice, amount, volume);
     }
 
     /**
@@ -136,6 +190,31 @@ public class Tick implements Serializable {
         this.maxPrice = highPrice;
         this.minPrice = lowPrice;
         this.closePrice = closePrice;
+        this.amount = Decimal.ZERO;
+        this.volume = volume;
+    }
+
+    /**
+     * Constructor.
+     * @param timePeriod the time period
+     * @param endTime the end time of the tick period
+     * @param openPrice the open price of the tick period
+     * @param highPrice the highest price of the tick period
+     * @param lowPrice the lowest price of the tick period
+     * @param closePrice the close price of the tick period
+     * @param amount the total amount of the tick period
+     * @param volume the volume of the tick period
+     */
+    public Tick(Duration timePeriod, ZonedDateTime endTime, Decimal openPrice, Decimal highPrice, Decimal lowPrice, Decimal closePrice, Decimal amount, Decimal volume) {
+        checkTimeArguments(timePeriod, endTime);
+        this.timePeriod = timePeriod;
+        this.endTime = endTime;
+        this.beginTime = endTime.minus(timePeriod);
+        this.openPrice = openPrice;
+        this.maxPrice = highPrice;
+        this.minPrice = lowPrice;
+        this.closePrice = closePrice;
+        this.amount = amount;
         this.volume = volume;
     }
 
